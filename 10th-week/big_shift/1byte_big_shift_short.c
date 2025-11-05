@@ -22,8 +22,8 @@ int main(void) {
 	}
 
 	for (i = 0; i < 10; ++i) {
-		printf("0x%02x ", (unsigned char)big_int[i]);
-//		printf("0x%02x ", big_int[i] & 0xff); // or this
+		printf("0x%02x ", (unsigned char)big_int[i]); // 빅 엔디언일 때 이러면 상위 1바이트를 읽어오나?
+//		printf("0x%02x ", big_int[i] & 0xff); // or this 그렇다면 이게 더 일반적인 코드일지도...
 	}
 	printf("\n");
 }
