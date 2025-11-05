@@ -6,12 +6,12 @@ union buf_int {
 };
 
 int main(void) {
-	union buf_int big_int[10];
+	union buf_int big_int[10] = { 0, };
 	int i;
 	for (i = 0; i < 10; ++i) {
 		unsigned int u;
 		scanf("%x", &u);
-		big_int[i].c = u; // 잘려서 저장되는지 확인하기.
+		big_int[i].c = u;
 	}
 
 	int N;
