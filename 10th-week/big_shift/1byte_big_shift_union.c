@@ -6,7 +6,7 @@ union buf_int {
 };
 
 int main(void) {
-	union buf_int big_int[10] = { 0, };
+	union buf_int big_int[10];
 	int i;
 	for (i = 0; i < 10; ++i) {
 		unsigned int u;
