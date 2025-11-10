@@ -11,18 +11,15 @@ int main(void) {
 		big_int[i] = u;
 	}
 
-	int N;
-	scanf("%d", &N);
-	int bytes_shift = N / 8, bits_mod = N % 8, i;
+	int Nbits;
+	scanf("%d", &Nbits);
+	int Nbytes = Nbits / 8, Nbits_mod = Nbits % 8, i;
 
-	for (i = bytes_shift; i < 10; ++i) {
-		unsigned char v = big_int[i] << bits_mod;
-		if (i + 1 < 10) {
-			v |= big_int[i + 1] >> (8 - bits_mod);
-		}
-		big_int[i - bytes_shift] = v;
+	for (i = Nbytes; i < 8; ++i) {
+		big_int[i - Nbytes] = (big_int[i] << Nbits_mod) | (big_int[i + 1] >> (8 - Nbits_mod));
 	}
-	for (i -= bytes_shift; i < 10; ++i) {
+	big_int[9 - Nbytes] = big_int[i] << Nbits_mod;
+	for (i = 10 - Nbytes; i < 10; ++i) {
 		big_int[i] = 0;
 	}
 
