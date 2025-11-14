@@ -37,6 +37,8 @@ int main(void) {
 }
 ```
 ```c
+#include <stdlib.h>
+
 // 적법하지 않은 방식.
 // 문법적으로는 OK.
 // goo가 반환된 후로부터 a는 더 이상 보호받지 않는 메모리. => 변수 X.
@@ -62,9 +64,9 @@ int main() {
 
 2. int 4개짜리의 공간을 가리킨다. (배열과 같음. sarr1 가리키는 게 아님 주의.)
 ```c
-    int sarr1[4];
-    int *darr1 = malloc(sizeof(int) * 4);
-    // 둘 다 16바이트 공간이다...
+int sarr1[4];
+int *darr1 = malloc(sizeof(int) * 4);
+// 둘 다 16바이트 공간이다...
 ```
 
 
