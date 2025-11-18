@@ -17,7 +17,7 @@ void print_big_int(unsigned char *big_int) {
 	printf("\n");
 }
 
-void left_shift_big_int(unsigned char *big_int) {
+void single_left_shift_big_int(unsigned char *big_int) {
 	unsigned int *ptr1 = (unsigned int *)big_int;
 	unsigned short *ptr2 = (unsigned short *)&ptr1[2];
 	unsigned int prev_MSB = 0;
@@ -30,6 +30,13 @@ void left_shift_big_int(unsigned char *big_int) {
 	*ptr2 = (*ptr2 << 1) | (prev_MSB >> 31);
 }
 
+void left_shift_big_int(unsigned char *big_int, int Nbits) {
+	while (Nbits > 0) {
+		single_left_shift_big_int(big_int);
+		--Nbits;
+	}
+}
+
 int main(void) {
 	unsigned char big_int[10];
 	int N;
@@ -39,10 +46,6 @@ int main(void) {
 
 	print_big_int(big_int);
 
-	while (N > 0) {
-		left_shift_big_int(big_int);
-		--N;
-	}
-
+	left_shift_big_int(big_int, N);
 	print_big_int(big_int);
 }
