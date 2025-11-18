@@ -27,7 +27,7 @@ int main(void) {
 	A[9] <<= S % 8;
 
 	for (i = 0; i < 10; ++i) {
-		printf("0x%x ", A[i]);
+		printf("0x%02x ", A[i]);
 	}
 	printf("\n");
 	return 0;
