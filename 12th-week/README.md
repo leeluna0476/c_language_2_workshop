@@ -5,9 +5,11 @@ char arr[3][10] = { "hello", "world", "seojilee" };
 char *arrp[3] = { "hello", "world", "seojilee" };
 ```
 이 둘의 같은 점, 다른 점은?
-|Expression|Size|
+|Expression|Value|
 |---|---|
-|`sizeof(arr)`|<!--30B-->|
-|`sizeof(arrp)`|<!--12B-->|
-|`sizeof(arr[0])`|<!--10B-->|
-|`sizeof(arrp[0])`|<!--4B-->|
+|`sizeof(arr)`|<!--30-->|
+|`sizeof(arrp)`|<!--12-->|
+|`sizeof(arr[0])`|<!--10-->|
+|`sizeof(arrp[0])`|<!--4-->|
+|`arr[1][1]`|<!--'w'-->|
+|`arrp[1][1]`|<!--'w'-->|
