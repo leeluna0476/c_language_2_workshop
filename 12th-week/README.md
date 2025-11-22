@@ -197,6 +197,11 @@ struct D {
 };
 // compiled by clang with default option
 ```
+`struct A`의 각 멤버 변수의 크기는 1바이트와 4바이트이다.<br>
+`sizeof(struct A)`가 5가 되어야 할 것 같지만, 대부분의 경우 그렇지 않다.<br>
+대부분의 컴파일러는 구조체의 크기를 가장 큰 멤버 변수 크기의 배수로 맞춘다.<br>
+이런 패딩 처리가 발생하는 경우에 `sizeof(struct A)`는 8이 된다. `int`의 크기인 4의 배수에서 부족한 3바이트를 채운 것이다.
+
 |Expression|Value|
 |---|---|
 |`sizeof(struct A)`|<!--8-->|
