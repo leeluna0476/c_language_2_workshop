@@ -130,3 +130,33 @@ char **cp = c2;
 <!--  - `cp[2][0] = 'b';`-->
 - `c2`로 `"abc"` 고치기.
 <!--  - `c2[0][1] = 'j';`-->
+
+## 구조체
+```c
+struct A {
+    char a;
+    int b;
+};
+
+struct B {
+    char a[100];
+    short b;
+};
+
+struct C {
+    char a[99];
+    short b;
+};
+
+struct D {
+    int a[4];
+    short b[2];
+};
+// compiled by clang with default option
+```
+|Expression|Value|
+|---|---|
+|`sizeof(struct A)`|<!--8-->|
+|`sizeof(struct B)`|<!--102-->|
+|`sizeof(struct C)`|<!--102-->|
+|`sizeof(struct D)`|<!--20-->|
