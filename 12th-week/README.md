@@ -16,7 +16,7 @@ char *arrp[3] = { "hello", "world", "seojilee" };
 |`arrp[1][1]`|<!--'w'-->|
 
 이 둘의 같은 점, 다른 점은?
-|Exp1|Exp2|Equal|
+|Exp1|Exp2|Exp1 == Exp2|
 |---|---|---|
 |`arr`|`arrp`|`false`|
 |`arr[0]`|`arrp[0]`|`false`|
@@ -38,7 +38,7 @@ char *arrp[3] = { arr[0], arr[1], arr[2] };
 |`arrp[1][1]`|<!--'w'-->|
 
 이 둘의 같은 점, 다른 점은?
-|Exp1|Exp2|Equal|
+|Exp1|Exp2|Exp1 == Exp2|
 |---|---|---|
 |`arr`|`arrp`|`false`|
 |`arr[0]`|`arrp[0]`|`true`|
