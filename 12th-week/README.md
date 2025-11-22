@@ -1,10 +1,11 @@
 # C언어(2) 소모임 - 정기 (12주차)
 ## 포인터의 배열
 ```c
+// arr는 char를 저장하는 2차원 배열, arrp는 char의 주소를 저장하는 1차원 배열.
+// => arr는 char 변수의 배열, arrp는 char 포인터변수의 배열.
 char arr[3][10] = { "hello", "world", "seojilee" };
 char *arrp[3] = { "hello", "world", "seojilee" };
 ```
-이 둘의 같은 점, 다른 점은?
 |Expression|Value|
 |---|---|
 |`sizeof(arr)`|<!--30-->|
@@ -13,14 +14,20 @@ char *arrp[3] = { "hello", "world", "seojilee" };
 |`sizeof(arrp[0])`|<!--4-->|
 |`arr[1][1]`|<!--'w'-->|
 |`arrp[1][1]`|<!--'w'-->|
-|`arr[0]`|<!--직접 실행해보기-->|
-|`arrp[0]`|<!--직접 실행해보기-->|
+
+이 둘의 같은 점, 다른 점은?
+|Exp1|Exp2|Equal|
+|---|---|---|
+|`arr`|`arrp`|`false`|
+|`arr[0]`|`arrp[0]`|`false`|
+|`arr[0][0]`|`arrp[0][0]`|`true`|
 
 ```c
+// arr는 char를 저장하는 2차원 배열, arrp는 char의 주소를 저장하는 1차원 배열.
+// => arr는 char 변수의 배열, arrp는 char 포인터변수의 배열.
 char arr[3][10] = { "hello", "world", "seojilee" };
 char *arrp[3] = { arr[0], arr[1], arr[2] };
 ```
-이 둘의 같은 점, 다른 점은?
 |Expression|Value|
 |---|---|
 |`sizeof(arr)`|<!--30-->|
@@ -29,5 +36,10 @@ char *arrp[3] = { arr[0], arr[1], arr[2] };
 |`sizeof(arrp[0])`|<!--4-->|
 |`arr[1][1]`|<!--'w'-->|
 |`arrp[1][1]`|<!--'w'-->|
-|`arr[0]`|<!--직접 실행해보기-->|
-|`arrp[0]`|<!--직접 실행해보기-->|
+
+이 둘의 같은 점, 다른 점은?
+|Exp1|Exp2|Equal|
+|---|---|---|
+|`arr`|`arrp`|`false`|
+|`arr[0]`|`arrp[0]`|`true`|
+|`arr[0][0]`|`arrp[0][0]`|`true`|
