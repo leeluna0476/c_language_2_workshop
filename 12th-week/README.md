@@ -121,7 +121,7 @@ char **cp = c2;
 |`sizeof(c1[0][0])`|<!--1-->|
 |`sizeof(cp[0][0])`|<!--1-->|
 
-**[Ms. Bong @alkylnitrite]**
+**[Ms. Bong [@alkylnitrite](https://github.com/alkylnitrite)]**
 - `"ghi"`를 `c2`로 나타내기.
   - `c2[2]`
 - `"def"`를 `cp`로 나타내기.
