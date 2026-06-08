@@ -6,7 +6,7 @@
 - a와 b에 저장된 값을 맞바꾸고, arr 배열에 저장된 값들의 순서롤 뒤집는다.
 - 단, arr 배열은 마지막 요소가 항상 -1이다.
 
-# C Programming (2) Workshop – Regular Session (Week 9)
+# C Language (2) Workshop – Regular Session (Week 9)
 1. Pointers
 
 ## Mission
