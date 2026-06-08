@@ -14,7 +14,7 @@
 4. 문자열에 포함된 각 소문자 개수 세기. (a 몇개, b 몇개, ...)
    - ㅈㅅㅇ
 
-# C Programming (2) Study Group – Regular Session (Week 6)
+# C Language (2) Workshop – Regular Session (Week 6)
 1. Address expressions in multidimensional arrays
 2. Definition of strings
 3. Applications of arrays – Part 1
