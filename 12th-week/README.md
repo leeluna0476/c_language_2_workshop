@@ -248,3 +248,319 @@ struct A {
     struct A v; // ERROR! 계산 불가.
 };
 ```
+# C Language (2) Workshop – Regular Session (Week 12)
+
+> * [Array of Pointers](#array-of-pointers)
+> * [Pointer to an Array](#pointer-to-an-array)
+> * [Structures](#structures)
+
+## Array of Pointers
+
+```c
+// arr is a 2-dimensional array that stores chars,
+// arrp is a 1-dimensional array that stores addresses of chars.
+//
+// => arr is an array of char variables,
+//    arrp is an array of char pointer variables.
+char arr[3][10] = { "hello", "world", "seojilee" };
+char *arrp[3] = { "hello", "world", "seojilee" };
+```
+
+| Expression        | Value      |
+| ----------------- | ---------- |
+| `sizeof(arr)`     | <!--30-->  |
+| `sizeof(arrp)`    | <!--12-->  |
+| `sizeof(arr[0])`  | <!--10-->  |
+| `sizeof(arrp[0])` | <!--4-->   |
+| `arr[1][1]`       | <!--'w'--> |
+| `arrp[1][1]`      | <!--'w'--> |
+
+What are the similarities and differences between the two?
+
+| Exp1        | Exp2         | Exp1 == Exp2 |
+| ----------- | ------------ | ------------ |
+| `arr`       | `arrp`       | `false`      |
+| `arr[0]`    | `arrp[0]`    | `false`      |
+| `arr[0][0]` | `arrp[0][0]` | `true`       |
+
+## Pointer to an Array
+
+How can we represent an array using a pointer variable?
+
+```c
+// Traverse arr using a pointer variable and print each string separated by a newline.
+char arr[3][10] = { "hello", "world", "seojilee" };
+char *parr = (char *)arr;
+while (parr < (char *)(&arr + 1)) {
+    printf("%s\n", parr);
+    parr += 10;
+}
+```
+
+| Expression        | Value     |
+| ----------------- | --------- |
+| `sizeof(arr)`     | <!--30--> |
+| `sizeof(parr)`    | <!--4-->  |
+| `sizeof(arr[0])`  | <!--10--> |
+| `sizeof(parr[0])` | <!--1-->  |
+
+| Exp1         | Exp2       | Exp1 == Exp2 |
+| ------------ | ---------- | ------------ |
+| `arr`        | `parr`     | `true`       |
+| `arr[0]`     | `parr`     | `true`       |
+| `arr + 1`    | `parr + 1` | `false`      |
+| `arr[0] + 1` | `parr + 1` | `true`       |
+| `arr[0]`     | `parr[0]`  | `false`      |
+| `arr[0][0]`  | `parr[0]`  | `true`       |
+
+Since all elements of an array are stored contiguously, a single-level pointer can point to each element of the array sequentially.
+
+In this case, the logical structure of `arr`, which has two address-arithmetic units—one `char` variable and one block consisting of 10 `char` variables—disappears.
+
+This is because `parr` points to a single `char` variable and therefore has only one address-arithmetic unit.
+
+Could we use a double pointer instead?
+
+```c
+char arr[3][10] = { "hello", "world", "seojilee" };
+char **parr = (char **)arr;
+// Is arr[0][0] == parr[0][0] ?
+```
+
+A double pointer variable cannot represent `arr`.
+
+`arr` and `arr[0]` have the same address; only the unit of address arithmetic is different.
+
+Once `arr` is assigned to `parr`, only the address is copied, and the logical structure of the array is lost. (Just like in the previous single-pointer example.)
+
+`parr` is a double pointer variable, which means that if you follow the address stored in `parr`, you will find another address stored there.
+
+In other words, the data is interpreted as being reached only after following an address twice.
+
+If the address of `arr` is stored in `parr`, then following the address once already reaches the data.
+
+However, because `parr` is a double pointer, that data will be interpreted as another address rather than as actual data.
+
+In the example above, when `parr[0]` is read, `lleh` will be interpreted as a 4-byte address.
+
+This does not match our intention and is dangerous because it is an unknown address.
+
+| Exp1        | Exp2         | Exp1 == Exp2 |
+| ----------- | ------------ | ------------ |
+| `arr`       | `parr`       | `true`       |
+| `arr[0]`    | `parr[0]`    | `false`      |
+| `arr[0][0]` | `parr[0][0]` | `false`      |
+
+![](./double_ptr_and_arr.jpg)
+
+We want to keep the same level of dereferencing while defining multiple levels of address-arithmetic units, just like an array.
+
+In other words, we want to introduce the concept of a "block" to pointer variables as well.
+
+The syntax for this is called a **pointer to an array**.
+
+An array of pointers is an **array** that stores pointers, while a pointer to an array is a **pointer** that represents an array.
+
+```c
+char arr[3][10] = { "hello", "world", "seojilee" };
+char (*parr)[10] = arr;
+char *parr1 = (char *)arr;
+```
+
+`parr` is still a single-level pointer.
+
+This means that it follows the stored address and moves to the referenced location only once.
+
+However, the unit of address arithmetic—that is, the **block being pointed to**—has become more complex.
+
+Let us compare `parr` and `parr1`.
+
+`parr1` points to **one `char` variable**.
+
+When `parr1 + 1` is calculated, the resulting address is 1 byte away from `parr1`.
+
+Applying one `*` (`*parr1`) follows the address stored in `parr1` and accesses a memory region of size `char`.
+
+`parr` points to **a block consisting of 10 `char` variables**.
+
+When `parr + 1` is calculated, the resulting address is 10 bytes away from `parr`.
+
+Applying one `*` (`*parr`) does not move to the stored address. Instead, the unit of the block becomes smaller, from a block of 10 `char`s to a block of 1 `char`.
+
+Just as with arrays, it points to a block one level smaller.
+
+Applying another `*` (`**parr`) can no longer reduce the block size, so it follows the stored address and accesses a memory region of size `char`.
+
+In this way, we can represent the logical structure of an array using a pointer variable.
+
+![](./pointer_of_an_array.jpg)
+
+```c
+#include <stdio.h>
+
+void scan_arr(char (*parr)[10]) {
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 10; ++j) {
+            scanf("%c", &parr[i][j]); // Can be used just like a 2D array.
+        }
+    }
+}
+
+int main(void) {
+    char arr[3][10];
+    scan_arr(arr);
+}
+```
+
+```c
+char c11[3][10]={"abc", "def", "ghi"};
+char *c2[3] = { c11[0], c11[1], c11[2] };
+char (*c1)[10] = c11;
+char **cp = c2;
+// Think of every possible interpretation using these four expressions.
+// Assume c11 == 0 and calculate relative addresses.
+```
+
+| Expression          | Value         |
+| ------------------- | ------------- |
+| `sizeof(c11)`       | <!--30-->     |
+| `sizeof(c2)`        | <!--12(24)--> |
+| `sizeof(c1)`        | <!--4(8)-->   |
+| `sizeof(cp)`        | <!--4(8)-->   |
+| `sizeof(c11[0])`    | <!--10-->     |
+| `sizeof(c2[0])`     | <!--4(8)-->   |
+| `sizeof(c1[0])`     | <!--10-->     |
+| `sizeof(cp[0])`     | <!--4(8)-->   |
+| `sizeof(c11[0][0])` | <!--1-->      |
+| `sizeof(c2[0][0])`  | <!--1-->      |
+| `sizeof(c1[0][0])`  | <!--1-->      |
+| `sizeof(cp[0][0])`  | <!--1-->      |
+| `&cp[1][1]`         | <!--11-->     |
+| `&c1[3] + 5`        | <!--80-->     |
+
+**[Ms. Bong [@alkylnitrite](https://github.com/alkylnitrite)]**
+
+* Represent `"ghi"` using `c2`.
+* Represent `"def"` using `cp`.
+* Modify `"ghi"` using `cp`.
+* Modify `"abc"` using `c2`.
+
+## Structures
+
+```c
+struct A {
+    char a;
+    int b;
+};
+
+struct B {
+    char a[100];
+    short b;
+};
+
+struct C {
+    char a[99];
+    short b;
+};
+
+struct D {
+    int a[4];
+    short b[2];
+};
+// compiled by clang with default option
+```
+
+The sizes of the member variables in `struct A` are 1 byte and 4 bytes.
+
+It may seem that `sizeof(struct A)` should be 5, but in most cases it is not.
+
+Most compilers align the size of a structure to a multiple of the size of its largest member variable.
+
+When this padding occurs, `sizeof(struct A)` becomes 8.
+
+The compiler fills the missing 3 bytes to make the total size a multiple of 4, the size of `int`.
+
+| Expression         | Value      |
+| ------------------ | ---------- |
+| `sizeof(struct A)` | <!--8-->   |
+| `sizeof(struct B)` | <!--102--> |
+| `sizeof(struct C)` | <!--102--> |
+| `sizeof(struct D)` | <!--20-->  |
+
+**[Reference]**
+
+```c
+struct A {
+    char a;
+    int b;
+};
+
+int main(void) {
+    struct A a = { 'a', 42 };
+    struct A b;
+
+    b = a;
+}
+```
+
+Structure variables can be copied using the assignment operator as shown above.
+
+Likewise, when a function returns a structure variable, the entire structure is copied.
+
+However, comparison operations such as `b == a` are not allowed.
+
+### Structure Pointer
+
+```c
+struct A {
+    char a;
+    int b;
+};
+
+int main(void) {
+    struct A s = { 'a', 42 };
+    struct A *p = &s;
+}
+```
+
+The structure pointer variable `p` stores the address of the structure variable `s`.
+
+What is `sizeof(p)`?
+
+Of course, it is 4. (Under the standard environment used in this study group.)
+
+No matter what address is stored in `p`, the memory occupied by `p` itself only needs enough space to store an arbitrary address.
+
+The value stored in `p` is simply an address, and the structure data can be obtained by going to that address.
+
+Can we include a pointer to the same structure type while defining the structure itself?
+
+Of course.
+
+```c
+struct A {
+    char a;
+    int b;
+    struct A *p;
+};
+```
+
+How is this possible even though the definition of the structure has not yet been completed?
+
+Because the memory occupied by `p` is not the size of `struct A`.
+
+Regardless of the type it points to, `p` itself only occupies 4 bytes to store an arbitrary address.
+
+Therefore, the size of `struct A` can still be calculated without any problem.
+
+Using this technique, we can implement data structures such as Linked Lists and Trees.
+
+On the other hand, declaring a member variable of the same structure type directly is impossible.
+
+```c
+struct A {
+    char a;
+    int b;
+    struct A v; // ERROR! Size cannot be determined.
+};
+```
