@@ -48,7 +48,7 @@
 ```
 5. strlen 구현하기.
 
-# C Programming (2) Study Group – Self-Directed Session (Week 5)
+# C Language (2) Workshop – Self-Directed Session (Week 5)
 1. Fundamentals of bitwise operations
 2. Representing patterns as data: arrays and bits
 3. Definition of strings
