@@ -5,7 +5,7 @@
 변수가 뭘까?
 - 메모리 공간에 이름을 붙인 것.
 - 이름은 컴파일 후 전부 사라진다. C언어 레벨에서만 존재...
-- 변수가 **메모리 공간 그 자체**라고 볼 수도 있다.
+- 변수가 **메모리 공간 그 자체**라고 볼 수도 있다. (엄밀하게는 아니다.)
 - `int a;` int 크기만큼의 메모리 공간.
 
 - `int *p = &a;`
@@ -149,3 +149,195 @@ ptr[1] = malloc(sizeof(int) * 3);
 
 4. `int arr[2][3][4];` 숙제.
   - 이 배열과 논리적으로 동일한 구조의 동적 배열을 만드시오.
+
+# C Programming (2) Study Group – Regular Session (Week 11)
+
+## What Is a Pointer Variable?
+
+A pointer variable... how is it different from a regular variable?
+
+What is a variable?
+
+* A name attached to a memory location.
+* Variable names disappear after compilation; they only exist at the C language level.
+* A variable can also be viewed as the memory space itself. (Not strictly true... but still OK here.)
+* `int a;` allocates a memory space large enough to store an `int`.
+
+```c
+int *p = &a;
+```
+
+* `p` points to the memory space represented by `a`.
+* `p` is also a variable.
+* `p` is also a memory space.
+
+From the perspective of memory, `p` and `a` are the same: both are variables occupying memory.
+
+The difference lies in how the stored value is interpreted.
+
+* `p` is a pointer variable, meaning that its value is interpreted as an address.
+* Consider:
+
+```c
+int *p = 1;
+int a = 1;
+```
+
+What is the difference?
+
+---
+
+## Static Memory and Dynamic Memory
+
+| Category        | Static                             | Dynamic                                                |
+| --------------- | ---------------------------------- | ------------------------------------------------------ |
+| Size determined | Before execution (compile time)    | During execution (allocation time)                     |
+| Created         | According to variable declarations | When a memory allocation function is called            |
+| Destroyed       | When the variable's scope ends     | When `free()` is called or when the program terminates |
+
+### 1. Pointing to a Single `int`
+
+```c
+#include <stdlib.h>
+
+int main(void) {
+    int sint;
+    int *dint = malloc(sizeof(int));
+    free(dint);
+}
+```
+
+```c
+#include <stdlib.h>
+
+// Invalid usage.
+// Syntactically correct, but unsafe.
+int *goo() {
+    int a = 12;
+    return &a;
+}
+
+// Valid usage.
+int *foo() {
+    int *a = malloc(sizeof(int));
+    a[0] = 12;
+    return a;
+}
+
+int main() {
+    int *p = foo();
+    printf("%d\n", *p);
+    free(p);
+}
+```
+
+Dynamic memory allows you to control the lifetime of memory manually.
+
+### 2. Pointing to Four `int`s
+
+```c
+int sarr1[4];
+int *darr1 = malloc(sizeof(int) * 4);
+```
+
+Both represent a 16-byte region (assuming `sizeof(int) == 4`).
+
+### 3. Pointing to a 2×3 Array
+
+Are the following structures equivalent?
+
+```c
+int sarr2[2][3];
+
+int **darr2 = malloc(sizeof(int *) * 2);
+darr2[0] = malloc(sizeof(int) * 3);
+darr2[1] = malloc(sizeof(int) * 3);
+```
+
+How is this structure different from the previous examples?
+
+---
+
+## What Is a Double Pointer?
+
+* A pointer variable stores an address.
+* A double pointer also stores an address.
+
+```c
+int *p = &a;
+```
+
+* `p == &a`
+* `*p == a`
+
+```c
+int **p2 = &p;
+```
+
+* `p2 == &p`
+* `*p2 == p == &a`
+* `**p2 == *p == a`
+
+`p2` stores the address of `p`.
+
+To evaluate `**p2`:
+
+1. Interpret the value stored in `p2` as an address and move there.
+2. Obtain the value stored in `p`.
+3. Interpret that value as another address and move there.
+4. Read the value stored at that location.
+
+```c
+int b;
+
+*p2 = &b;
+```
+
+Now:
+
+```c
+p == &b
+```
+
+The address stored in `p` changed because `p2` points directly to `p`.
+
+---
+
+## Mission
+
+### 1.
+
+Create a dynamic array named `dyarr`.
+
+It should have exactly the same structure as:
+
+```c
+int arr[20];
+```
+
+### 2.
+
+```c
+int b = 42;
+```
+
+Write a program that prints the value `42` using a double pointer `p2`.
+
+### 3.
+
+```c
+int arr[2][3] = {
+    {1, 2, 3},
+    {4, 5, 6}
+};
+```
+
+Create a dynamic array that has the same logical structure.
+
+### 4. Homework
+
+```c
+int arr[2][3][4];
+```
+
+Create a dynamic allocation structure that is logically equivalent to this array.
