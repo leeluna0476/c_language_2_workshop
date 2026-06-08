@@ -13,7 +13,7 @@
 7. `memcmp`
 8. `memset`
 
-# C Programming (2) Study Group – Regular Session (Week 8)
+# C Programming (2) Workshop – Regular Session (Week 8)
 1. Pointers
 2. Implementation
 
