@@ -150,7 +150,7 @@ ptr[1] = malloc(sizeof(int) * 3);
 4. `int arr[2][3][4];` 숙제.
   - 이 배열과 논리적으로 동일한 구조의 동적 배열을 만드시오.
 
-# C Programming (2) Study Group – Regular Session (Week 11)
+# C Language (2) Workshop – Regular Session (Week 11)
 
 ## What Is a Pointer Variable?
 
