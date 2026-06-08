@@ -47,3 +47,62 @@
 *****
 ```
 5. strlen 구현하기.
+
+# C Programming (2) Study Group – Self-Directed Session (Week 5)
+1. Fundamentals of bitwise operations
+2. Representing patterns as data: arrays and bits
+3. Definition of strings
+
+## Missions
+1. Print an integer as a 32-bit binary number.
+
+Example
+
+Input
+```
+5
+```
+Output
+```
+00000000000000000000000000000101
+```
+2. Read an integer n and an integer k, print the binary representation of n, then set the k-th bit to 1 and print the result.
+0 ≤ k ≤ 31
+The most significant bit (MSB) is the 31st bit.
+
+Example
+
+Input
+```
+5 5
+```
+Output
+```
+00000000000000000000000000000101
+00000000000000000000000000100101
+```
+3. Read an integer n and an integer k, print the binary representation of n, then clear the k-th bit to 0 and print the result.
+0 ≤ k ≤ 31
+The most significant bit (MSB) is the 31st bit.
+
+Example
+
+Input
+```
+5 2
+```
+Output
+```
+00000000000000000000000000000101
+00000000000000000000000000000001
+```
+4. Draw a box.
+
+Output
+```
+*****
+*   *
+*   *
+*****
+```
+5. Implement strlen().
