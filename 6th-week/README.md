@@ -13,3 +13,22 @@
    - ㄱㅇㅊ
 4. 문자열에 포함된 각 소문자 개수 세기. (a 몇개, b 몇개, ...)
    - ㅈㅅㅇ
+
+# C Programming (2) Study Group – Regular Session (Week 6)
+1. Address expressions in multidimensional arrays
+2. Definition of strings
+3. Applications of arrays – Part 1
+4. Applications of arrays – Part 2
+
+## Missions
+1. Draw an array in a spreadsheet and represent the addresses of blocks with various sizes.
+  - Assigned to: ㅅㅌㅅ
+2. Implement strlen() from scratch.
+  - Assigned to: ㅎㅅㅇ
+3. Calculate the sum of each row and column in a two-dimensional array.
+  - Arithmetic sequence
+  - Non-arithmetic sequence
+  - Assigned to: ㄱㅇㅊ
+4. Count the occurrences of each lowercase letter in a string.
+  - Number of as, bs, cs, ...
+  - Assigned to: ㅈㅅㅇ
