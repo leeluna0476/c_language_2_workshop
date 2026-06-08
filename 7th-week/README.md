@@ -5,7 +5,7 @@
 ## 미션
 - 주어진 코드를 보며 한 줄 단위로 해석.
 
-# C Programming (2) Study Group – Regular Session (Week 7)
+# C Language (2) Workshop – Regular Session (Week 7)
 1. Integer Promotion
 2. Type Casting
 
