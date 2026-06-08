@@ -12,3 +12,18 @@
 6. `memchr`
 7. `memcmp`
 8. `memset`
+
+# C Programming (2) Study Group – Regular Session (Week 8)
+1. Pointers
+2. Implementation
+
+## Mission
+- Implement the following functions from the Standard C Library:
+1. `strlen`
+2. `strcmp`
+3. `strstr`
+4. `strcpy`
+5. `strchr`
+6. `memchr`
+7. `memcmp`
+8. `memset`
